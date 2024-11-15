@@ -34,7 +34,7 @@ interface UnsplashSearchResponse {
 export const fetchImages = async (
   query: string,
   page: number,
-  perPage: number = 10
+  perPage: number = 20
 ): Promise<UnsplashSearchResponse> => {
   const accessKey = import.meta.env.VITE_API_KEY;
 

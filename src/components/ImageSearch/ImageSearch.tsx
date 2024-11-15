@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { fetchImages } from "../../api/unsplash";
 import UnsplashImage from "../../types/UnsplashImage";
 import styles from "./ImageSearch.module.css";
+import Gallery from "../Gallery/Gallery";
 
 /**
  * ImageSearch component allows users to search for images using the Unsplash API.
@@ -39,7 +40,7 @@ const ImageSearch: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <form className={styles.searchForm} onSubmit={handleSearch}>
         <input
           type="text"
@@ -53,17 +54,7 @@ const ImageSearch: React.FC = () => {
         </button>
       </form>
 
-      <div className={styles.grid}>
-        {images.map((image) => (
-          <div key={image.id} className={styles.card}>
-            <img
-              src={image.urls.small}
-              alt={image.alt_description || "Unsplash Image"}
-              className={styles.image}
-            />
-          </div>
-        ))}
-      </div>
+      <Gallery images={images} />
 
       <div className={styles.pagination}>
         <button

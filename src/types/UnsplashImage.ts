@@ -6,6 +6,8 @@
  *
  */
 
+export type UnsplashImageSize = "raw" | "full" | "regular" | "small" | "thumb";
+
 interface UnsplashImageUrls {
   raw: string;
   full: string;
