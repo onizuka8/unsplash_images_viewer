@@ -26,15 +26,8 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
   return (
     <>
       <MasonryPhotoAlbum
-        photos={convertUnsplashImagesToGalleryPhotos(images, "thumb")}
+        photos={convertUnsplashImagesToGalleryPhotos(images, "small")}
         onClick={({ index }) => setIndex(index)}
-        sizes={{
-          size: "1200px",
-          sizes: [
-            { viewport: "(max-width: 767px)", size: "calc(100vw - 32px)" },
-            { viewport: "(max-width: 1479px)", size: "calc(100vw - 188px)" },
-          ],
-        }}
       />
 
       <Lightbox

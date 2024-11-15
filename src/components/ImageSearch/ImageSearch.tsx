@@ -3,6 +3,7 @@ import { fetchImages } from "../../api/unsplash";
 import UnsplashImage from "../../types/UnsplashImage";
 import styles from "./ImageSearch.module.css";
 import Gallery from "../Gallery/Gallery";
+import { generate } from "random-words";
 
 /**
  * ImageSearch component allows users to search for images using the Unsplash API.
@@ -10,6 +11,7 @@ import Gallery from "../Gallery/Gallery";
  */
 const ImageSearch: React.FC = () => {
   const [query, setQuery] = useState("");
+  const [previousQuery, setPreviousQuery] = useState(""); // Store previous query
   const [images, setImages] = useState<UnsplashImage[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -17,13 +19,23 @@ const ImageSearch: React.FC = () => {
   // On submission of the search form, fetch images from the Unsplash API 1st page
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const data = await fetchImages(query, 1);
-      setImages(data.results);
-      setPage(1);
-      setTotalPages(data.total_pages);
-    } catch (error) {
-      console.error(error);
+
+    // If no query is provided, generate a random search query of one word
+    const searchQuery = query || (generate() as string);
+
+    console.log(searchQuery);
+
+    // To avoid hitting the APIs if the query didn't change
+    if (searchQuery !== previousQuery) {
+      setPreviousQuery(searchQuery);
+      try {
+        const data = await fetchImages(searchQuery, 1);
+        setImages(data.results);
+        setPage(1);
+        setTotalPages(data.total_pages);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -49,7 +61,11 @@ const ImageSearch: React.FC = () => {
           placeholder="Search for images..."
           className={styles.searchInput}
         />
-        <button type="submit" className={styles.searchButton}>
+        <button
+          type="submit"
+          className={styles.searchButton}
+          disabled={query != "" && previousQuery === query}
+        >
           Search
         </button>
       </form>
