@@ -40,7 +40,7 @@ const ImageSearch: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       <form className={styles.searchForm} onSubmit={handleSearch}>
         <input
           type="text"
