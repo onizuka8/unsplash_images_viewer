@@ -1,11 +1,12 @@
-import type { Photo } from "react-photo-album";
 import UnsplashImage, { UnsplashImageSize } from "../types/UnsplashImage";
+import GalleryPhoto from "../types/GalleryPhoto";
 
 export function convertUnsplashImagesToGalleryPhotos(
   images: UnsplashImage[],
   size: UnsplashImageSize
-): Photo[] {
+): GalleryPhoto[] {
   return images.map((image) => ({
+    id: image.id,
     src: image.urls[size],
     width: image.width,
     height: image.height,

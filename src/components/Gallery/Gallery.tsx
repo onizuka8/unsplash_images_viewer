@@ -6,15 +6,12 @@ import { convertUnsplashImagesToGalleryPhotos } from "../../utils/ImageConverter
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { Zoom } from "yet-another-react-lightbox/plugins";
 
 import { MasonryPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
-// import optional lightbox plugins
-import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
-import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
-import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
-import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import "react-photo-album/masonry.css";
+import FavoriteBanner from "../FavoriteBanner/FavoriteBanner";
 
 interface GalleryProps {
   images: UnsplashImage[];
@@ -23,20 +20,31 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({ images }) => {
   const [index, setIndex] = useState(-1);
 
+  const onToggleFavorite = (selected: boolean, reference: string | number) => {
+    console.log("Favorite toggled:", selected, reference);
+    return true;
+  };
+
   return (
     <>
       <MasonryPhotoAlbum
         photos={convertUnsplashImagesToGalleryPhotos(images, "small")}
         onClick={({ index }) => setIndex(index)}
+        render={{
+          // TODO: implement Favorite saving
+          extras: (_, { photo: photo }) => (
+            <FavoriteBanner selected={true} reference={photo.id} onToggle={onToggleFavorite} />
+          ),
+        }}
       />
 
       <Lightbox
-        slides={convertUnsplashImagesToGalleryPhotos(images, "full")}
         open={index >= 0}
-        index={index}
         close={() => setIndex(-1)}
+        slides={convertUnsplashImagesToGalleryPhotos(images, "full")}
+        index={index}
         // enable optional lightbox plugins
-        plugins={[Fullscreen, Slideshow, Thumbnails, Zoom]}
+        plugins={[Zoom]}
       />
     </>
   );
