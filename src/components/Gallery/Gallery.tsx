@@ -13,6 +13,8 @@ import "react-photo-album/rows.css";
 import "react-photo-album/masonry.css";
 import FavoriteBanner from "../FavoriteBanner/FavoriteBanner";
 
+import { useFavorites } from "../../hooks/useFavorites";
+
 interface GalleryProps {
   images: UnsplashImage[];
 }
@@ -20,10 +22,7 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({ images }) => {
   const [index, setIndex] = useState(-1);
 
-  const onToggleFavorite = (selected: boolean, reference: string | number) => {
-    console.log("Favorite toggled:", selected, reference);
-    return true;
-  };
+  const { isFavorite, toggleFavorite } = useFavorites();
 
   return (
     <>
@@ -33,7 +32,11 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
         render={{
           // TODO: implement Favorite saving
           extras: (_, { photo: photo }) => (
-            <FavoriteBanner selected={true} reference={photo.id} onToggle={onToggleFavorite} />
+            <FavoriteBanner
+              selected={isFavorite(photo.id)}
+              reference={photo.id}
+              onToggle={toggleFavorite}
+            />
           ),
         }}
       />

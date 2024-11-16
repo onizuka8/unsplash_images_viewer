@@ -3,7 +3,7 @@ import { BiSolidBookmarkStar } from "react-icons/bi";
 import styles from "./FavoriteBanner.module.css";
 
 interface FavoriteBannerProps {
-  reference: string | number;
+  reference: string;
   selected: boolean;
   color?: string;
   activeColor?: string;
@@ -11,7 +11,7 @@ interface FavoriteBannerProps {
   stroke?: string;
   strokeWidth?: string | number;
   style?: React.CSSProperties;
-  onToggle?: (selected: boolean, reference: string | number) => boolean;
+  onToggle?: (selected: boolean, reference: string) => boolean;
 }
 
 const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
