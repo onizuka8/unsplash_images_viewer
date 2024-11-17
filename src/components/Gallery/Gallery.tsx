@@ -29,11 +29,14 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
         imageField={"thumbnail"}
         onClick={({ index }) => setIndex(index)}
         render={{
-          // TODO: implement Favorite saving
           extras: (_, { photo: photo }) => (
             <FavoriteBanner
               selected={isFavorite(photo)}
-              onToggle={(selected) => toggleFavorite(selected, photo)}
+              // We need to pass the full image a src for the Favorites
+              // as the Lightbox will use the src field for the full image.
+              // Eventually, can improve this by wrapping the Lightbox component
+              // and adding a imageFiled prop similary to what we do here with  the MasonryView
+              onToggle={(selected) => toggleFavorite(selected, { ...photo, src: photo.full })}
             />
           ),
         }}
@@ -44,7 +47,6 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
         close={() => setIndex(-1)}
         slides={images}
         index={index}
-        // enable optional lightbox plugins
         plugins={[Zoom]}
       />
     </>

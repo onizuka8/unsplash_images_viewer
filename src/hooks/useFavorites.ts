@@ -17,7 +17,6 @@ export const useFavorites = () => {
   const toggleFavorite = (selected: boolean, photo: GalleryPhoto): boolean => {
     try {
       const favorites = getFavorites();
-
       if (selected) {
         // We should never add the same photo twice but for safety we check
         // if it's already in the favorites array before inserting it
