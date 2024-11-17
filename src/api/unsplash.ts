@@ -2,8 +2,7 @@ import UnsplashImage from "../types/UnsplashImage";
 
 // To not expose the Unsplash API key in the FE, a serverless function is use as "proxy" to fetch data from Unsplash API.
 // For simplicity on localhost we can use Unsplash API directly (see readme for the .env file setup)
-const UNSPLASH_API_BASE =
-  import.meta.env.VITE_ENV === "dev" ? "https://api.unsplash.com" : "/api/unsplash";
+const UNSPLASH_API_BASE = import.meta.env.VITE_ENV === "dev" ? "https://api.unsplash.com" : "/api";
 
 // As only one api endpoint is being used, the response is defined here;
 // worth moving to a separate file if more apis are used.
