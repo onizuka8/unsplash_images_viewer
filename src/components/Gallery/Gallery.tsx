@@ -6,7 +6,7 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 import { Zoom, Captions } from "yet-another-react-lightbox/plugins";
 
 import "yet-another-react-lightbox/plugins/captions.css";
-import MasonryView from "./MasonryView";
+import { MasonryPhotoAlbum } from "react-photo-album";
 
 import "react-photo-album/rows.css";
 import "react-photo-album/masonry.css";
@@ -19,9 +19,10 @@ import GalleryPhoto from "../../types/GalleryPhoto";
 
 interface GalleryProps {
   images: GalleryPhoto[];
+  onFavoritesUpdated?: () => void;
 }
 
-const Gallery: React.FC<GalleryProps> = ({ images }) => {
+const Gallery: React.FC<GalleryProps> = ({ images, onFavoritesUpdated }) => {
   const [index, setIndex] = useState(-1);
   const [photos, setPhotos] = useState<GalleryPhoto[]>(images);
   const { isFavorite, toggleFavorite } = useFavorites();
@@ -34,9 +35,8 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 
   return (
     <>
-      <MasonryView
+      <MasonryPhotoAlbum
         photos={photos}
-        imageField={"thumbnail"}
         onClick={({ index }) => setIndex(index)}
         render={{
           extras: (_, { photo: elmPhoto }) => (
@@ -47,9 +47,12 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
                 // as the Lightbox will use the src field for the full image.
                 // Eventually, can improve this by wrapping the Lightbox component
                 // and adding a imageFiled prop similary to what we do here with  the MasonryView
-                onToggle={(selected) =>
-                  toggleFavorite(selected, { ...elmPhoto, src: elmPhoto.full })
-                }
+                onToggle={(selected) => {
+                  const result = toggleFavorite(selected, { ...elmPhoto, src: elmPhoto.full });
+                  if (onFavoritesUpdated && result) onFavoritesUpdated();
+
+                  return result;
+                }}
               />
               {
                 <CommentBanner

@@ -37,13 +37,9 @@
   justify-content: center;
 }
 
-.searchBar button,
-.paginationButton {
+.searchBar button {
   background-color: rgba(255, 190, 0, 0.8);
   padding: 10px;
-}
-.paginationButton {
-  margin: 10px;
 }
 
 .searchForm {
@@ -85,13 +81,6 @@
 
 .image:hover {
   transform: scale(1.05);
-}
-
-.pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
 }
 
 .pageInfo {

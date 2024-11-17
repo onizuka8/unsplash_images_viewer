@@ -5,9 +5,8 @@ import { TypeAnimation } from "react-type-animation";
 import "./App.css";
 
 function App() {
-  // For development purposes, show the image search component immediately.
-  const [showImageSearch, setShowImageSearch] = useState(import.meta.env.VITE_ENV === "dev");
-  const [showTypeAnimation, setTypeAnimation] = useState(import.meta.env.VITE_ENV !== "dev");
+  const [showImageSearch, setShowImageSearch] = useState(true);
+  const [showTypeAnimation, setTypeAnimation] = useState(false);
 
   return (
     <>

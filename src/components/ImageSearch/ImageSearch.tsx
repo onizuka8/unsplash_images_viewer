@@ -8,14 +8,9 @@ import { useFavorites } from "../../hooks/useFavorites";
 import { convertUnsplashImagesToGalleryPhotos } from "../../utils/ImageConverter";
 import GalleryPhoto from "../../types/GalleryPhoto";
 import { createPortal } from "react-dom";
+import Pagination from "../Pagination/Pagination";
 
-import {
-  BiSolidBookmarkStar,
-  BiArrowBack,
-  BiSearchAlt2,
-  BiLeftArrowAlt,
-  BiRightArrowAlt,
-} from "react-icons/bi";
+import { BiSolidBookmarkStar, BiArrowBack, BiSearchAlt2 } from "react-icons/bi";
 
 import PacmanLoader from "react-spinners/PacmanLoader";
 
@@ -46,6 +41,13 @@ const ImageSearch: React.FC = () => {
 
     setImages(paginatedFavorites);
     setFavoritesTotalPages(Math.ceil(allFavorites.length / itemsPerPage));
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Optional: adds a smooth scrolling effect
+    });
   };
 
   // Handle search form submission
@@ -84,6 +86,7 @@ const ImageSearch: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+    scrollToTop();
     setLoading(false);
   };
 
@@ -92,6 +95,7 @@ const ImageSearch: React.FC = () => {
     const newPage = direction === "next" ? favoritesPage + 1 : favoritesPage - 1;
     setFavoritesPage(newPage);
     paginateFavorites(newPage);
+    scrollToTop();
   };
 
   // Toggle between search and favorites views
@@ -106,6 +110,13 @@ const ImageSearch: React.FC = () => {
       paginateFavorites(1); // Load the first page of favorites
       setFavoritesPage(1);
       setFavoritesView(true);
+    }
+  };
+
+  const handleFavoriteUpdated = () => {
+    // if we are in the favorite view, we need to update the images
+    if (favoritesView) {
+      paginateFavorites(favoritesPage);
     }
   };
 
@@ -142,49 +153,21 @@ const ImageSearch: React.FC = () => {
         {favoritesView && <h1 className={styles.favoritesTitle}>Favorites</h1>}
       </div>
 
-      <Gallery images={images} />
+      <Gallery images={images} onFavoritesUpdated={handleFavoriteUpdated} />
 
       <div className={styles.pagination}>
         {!favoritesView ? (
-          <>
-            <button
-              onClick={() => handleSearchPagination("prev")}
-              disabled={page <= 1}
-              className={styles.paginationButton}
-            >
-              <BiLeftArrowAlt size={buttonIconSize} />
-            </button>
-            <span className={styles.pageInfo}>
-              {page} / {totalPages}
-            </span>
-            <button
-              onClick={() => handleSearchPagination("next")}
-              disabled={page >= totalPages}
-              className={styles.paginationButton}
-            >
-              <BiRightArrowAlt size={buttonIconSize} />
-            </button>
-          </>
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={handleSearchPagination}
+          />
         ) : (
-          <>
-            <button
-              onClick={() => handleFavoritesPagination("prev")}
-              disabled={favoritesPage <= 1}
-              className={styles.paginationButton}
-            >
-              <BiLeftArrowAlt size={buttonIconSize} />
-            </button>
-            <span className={styles.pageInfo}>
-              {favoritesPage} / {favoritesTotalPages}
-            </span>
-            <button
-              onClick={() => handleFavoritesPagination("next")}
-              disabled={favoritesPage >= favoritesTotalPages}
-              className={styles.paginationButton}
-            >
-              <BiRightArrowAlt size={buttonIconSize} />
-            </button>
-          </>
+          <Pagination
+            currentPage={favoritesPage}
+            totalPages={favoritesTotalPages}
+            onPageChange={handleFavoritesPagination}
+          />
         )}
       </div>
       {loading &&
