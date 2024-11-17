@@ -10,4 +10,5 @@ export default interface GalleryPhoto extends Photo {
   thumbnail: string;
   full: string;
   srcSet: GalleryPhotoSrcSet[];
+  description: string;
 }

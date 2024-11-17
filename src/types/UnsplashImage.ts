@@ -22,6 +22,7 @@ interface UnsplashImage {
   user: { name: string };
   width: number;
   height: number;
+  description: string;
 }
 
 export default UnsplashImage;

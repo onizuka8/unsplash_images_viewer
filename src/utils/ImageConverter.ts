@@ -30,5 +30,6 @@ export function convertUnsplashImagesToGalleryPhotos(images: UnsplashImage[]): G
     thumbnail: image.urls.small,
     full: image.urls.full,
     srcSet: buildSrcSet(image),
+    description: image.description,
   }));
 }
