@@ -8,14 +8,23 @@ import { useFavorites } from "../../hooks/useFavorites";
 import { convertUnsplashImagesToGalleryPhotos } from "../../utils/ImageConverter";
 import GalleryPhoto from "../../types/GalleryPhoto";
 
+import {
+  BiSolidBookmarkStar,
+  BiArrowBack,
+  BiSearchAlt2,
+  BiLeftArrowAlt,
+  BiRightArrowAlt,
+} from "react-icons/bi";
+
 /**
  * ImageSearch component allows users to search for images using the Unsplash API.
  * It provides a search input, displays the search results as images, and includes pagination controls.
  */
 const ImageSearch: React.FC = () => {
   const itemsPerPage = 15; // Define the number of items per page for search
+  const buttonIconSize = "1.2em"; // Define the size of the pagination button icons
   const [query, setQuery] = useState("");
-  const [previousQuery, setPreviousQuery] = useState(""); // Store previous query
+  const [previousQuery, setPreviousQuery] = useState(String); // Store previous query
   const [images, setImages] = useState<GalleryPhoto[]>([]); // Images to display in the gallery
   const [searchImages, setSearchImages] = useState<GalleryPhoto[]>([]); // Search result images
   const [page, setPage] = useState(1); // Current page for search
@@ -42,6 +51,7 @@ const ImageSearch: React.FC = () => {
 
     if (searchQuery !== previousQuery) {
       setPreviousQuery(searchQuery);
+      setQuery(searchQuery);
       try {
         const data = await fetchImages(searchQuery, 1, itemsPerPage);
         const newImages = convertUnsplashImagesToGalleryPhotos(data.results);
@@ -93,28 +103,36 @@ const ImageSearch: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {!favoritesView && (
-        <form className={styles.searchForm} onSubmit={handleSearch}>
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search for images..."
-            className={styles.searchInput}
-          />
-          <button
-            type="submit"
-            className={styles.searchButton}
-            disabled={query !== "" && previousQuery === query}
-          >
-            Search
-          </button>
-        </form>
-      )}
+      <div className={styles.searchBar}>
+        <button className={styles.favoritesButton} onClick={handleFavoriteToggle}>
+          {favoritesView ? (
+            <BiArrowBack size={buttonIconSize} />
+          ) : (
+            <BiSolidBookmarkStar size={buttonIconSize} />
+          )}
+        </button>
 
-      <button className={styles.searchButton} onClick={handleFavoriteToggle}>
-        {favoritesView ? "Back to Search" : "View Favorites"}
-      </button>
+        {!favoritesView && (
+          <form className={styles.searchForm} onSubmit={handleSearch}>
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search for images..."
+              className={styles.searchInput}
+            />
+            <button
+              type="submit"
+              className={styles.searchButton}
+              disabled={query !== "" && previousQuery === query}
+            >
+              <BiSearchAlt2 size={buttonIconSize} color="black" />
+            </button>
+          </form>
+        )}
+
+        {favoritesView && <h1 className={styles.favoritesTitle}>Favorites</h1>}
+      </div>
 
       <Gallery images={images} />
 
@@ -126,17 +144,17 @@ const ImageSearch: React.FC = () => {
               disabled={page <= 1}
               className={styles.paginationButton}
             >
-              Previous
+              <BiLeftArrowAlt size={buttonIconSize} />
             </button>
             <span className={styles.pageInfo}>
-              Page {page} of {totalPages}
+              {page} / {totalPages}
             </span>
             <button
               onClick={() => handleSearchPagination("next")}
               disabled={page >= totalPages}
               className={styles.paginationButton}
             >
-              Next
+              <BiRightArrowAlt size={buttonIconSize} />
             </button>
           </>
         ) : (
@@ -146,17 +164,17 @@ const ImageSearch: React.FC = () => {
               disabled={favoritesPage <= 1}
               className={styles.paginationButton}
             >
-              Previous
+              <BiLeftArrowAlt size={buttonIconSize} />
             </button>
             <span className={styles.pageInfo}>
-              Page {favoritesPage} of {favoritesTotalPages}
+              {favoritesPage} / {favoritesTotalPages}
             </span>
             <button
               onClick={() => handleFavoritesPagination("next")}
               disabled={favoritesPage >= favoritesTotalPages}
               className={styles.paginationButton}
             >
-              Next
+              <BiRightArrowAlt size={buttonIconSize} />
             </button>
           </>
         )}
