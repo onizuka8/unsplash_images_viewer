@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ImageSearch from "./components/ImageSearch/ImageSearch";
 import { TypeAnimation } from "react-type-animation";
 
