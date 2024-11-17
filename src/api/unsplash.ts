@@ -41,6 +41,7 @@ export const fetchImages = async (
   const response = await fetch(
     `${UNSPLASH_API_BASE}/search/photos?query=${query}&page=${page}&per_page=${perPage}`,
     {
+      // headers is only required for the Unsplash API
       headers: {
         Authorization: `Client-ID ${accessKey}`,
       },
