@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 
 interface CommentBannerProps {
   color?: string;
+  emptyColor?: string;
   activeColor?: string;
   size?: string | number;
   stroke?: string;
@@ -16,6 +17,7 @@ interface CommentBannerProps {
 
 const CommentBanner: React.FC<CommentBannerProps> = ({
   color = "rgba(255, 190, 0, 0.8)",
+  emptyColor = "gray",
   size = "1.5em",
   stroke = "white",
   strokeWidth = 0.1,
@@ -54,7 +56,7 @@ const CommentBanner: React.FC<CommentBannerProps> = ({
     <div>
       <BiCommentDetail
         className={styles.commentBanner}
-        color={color}
+        color={commentText === "" ? emptyColor : color}
         size={size}
         style={{ stroke, strokeWidth }}
         onClick={handleClick}
