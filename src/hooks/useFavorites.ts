@@ -1,48 +1,41 @@
-/**
- * Custom hook to manage favorite items using localStorage.
- *
- * @returns {Object} An object containing the following functions:
- * - `isFavorite`: Checks if a given reference is in the list of favorites.
- * - `toggleFavorite`: Adds or removes a reference from the list of favorites based on the selected state.
- *
- * @function getFavorites
- * Retrieves the list of favorite items from localStorage.
- * @returns {string[]} An array of favorite item references.
- *
- * @function isFavorite
- * Checks if a given reference is in the list of favorites.
- * @param {string} reference - The reference to check.
- * @returns {boolean} True if the reference is a favorite, false otherwise.
- *
- * @function toggleFavorite
- * Adds or removes a reference from the list of favorites based on the selected state.
- * @param {boolean} selected - If true, adds the reference to favorites; if false, removes it.
- * @param {string} reference - The reference to add or remove.
- * @returns {boolean} True if the operation was successful, false otherwise.
- */
+import GalleryPhoto from "../types/GalleryPhoto";
+
 export const useFavorites = () => {
-  const getFavorites = (): string[] => JSON.parse(localStorage.getItem("favorites") || "[]");
+  const getFavorites = (): GalleryPhoto[] => {
+    try {
+      return JSON.parse(localStorage.getItem("favorites") || "[]");
+    } catch (error) {
+      console.error("Error parsing favorites from localStorage", error);
+      return [];
+    }
+  };
 
-  const isFavorite = (reference: string) => getFavorites().includes(reference);
+  const isFavorite = (photo: GalleryPhoto): boolean => {
+    return getFavorites().some((fav) => fav.id === photo.id);
+  };
 
-  const toggleFavorite = (selected: boolean, reference: string) => {
+  const toggleFavorite = (selected: boolean, photo: GalleryPhoto): boolean => {
     try {
       const favorites = getFavorites();
+
       if (selected) {
-        favorites.push(reference);
-      } else {
-        const index = favorites.indexOf(reference);
-        if (index > -1) {
-          favorites.splice(index, 1);
+        // We should never add the same photo twice but for safety we check
+        // if it's already in the favorites array before inserting it
+        if (!isFavorite(photo)) {
+          favorites.push(photo);
+          localStorage.setItem("favorites", JSON.stringify(favorites));
         }
+      } else {
+        const updatedFavorites = favorites.filter((fav) => fav.id !== photo.id);
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
       }
-      localStorage.setItem("favorites", JSON.stringify(favorites));
+
       return true;
     } catch (error) {
-      console.error("Error saving favorite", error);
+      console.error("Error updating favorites in localStorage", error);
       return false;
     }
   };
 
-  return { isFavorite, toggleFavorite };
+  return { isFavorite, toggleFavorite, getFavorites };
 };

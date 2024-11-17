@@ -3,7 +3,6 @@ import { BiSolidBookmarkStar } from "react-icons/bi";
 import styles from "./FavoriteBanner.module.css";
 
 interface FavoriteBannerProps {
-  reference: string;
   selected: boolean;
   color?: string;
   activeColor?: string;
@@ -11,7 +10,7 @@ interface FavoriteBannerProps {
   stroke?: string;
   strokeWidth?: string | number;
   style?: React.CSSProperties;
-  onToggle?: (selected: boolean, reference: string) => boolean;
+  onToggle?: (selected: boolean) => boolean;
 }
 
 const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
@@ -21,7 +20,6 @@ const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
   stroke = "white",
   strokeWidth = 0.7,
   selected,
-  reference,
   onToggle,
 }) => {
   const [active, setSelected] = useState(selected);
@@ -36,7 +34,7 @@ const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
 
     // Update the selected state if the onToggle function returns true
     // or if there is no onToggle function
-    if (onToggle && onToggle(newSelected, reference)) {
+    if (onToggle && onToggle(newSelected)) {
       setSelected(newSelected);
     } else if (!onToggle) {
       setSelected(newSelected);

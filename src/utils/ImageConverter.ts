@@ -3,7 +3,7 @@ import GalleryPhoto from "../types/GalleryPhoto";
 
 export function convertUnsplashImagesToGalleryPhotos(
   images: UnsplashImage[],
-  size: UnsplashImageSize
+  size: UnsplashImageSize = "full"
 ): GalleryPhoto[] {
   return images.map((image) => ({
     id: image.id,
