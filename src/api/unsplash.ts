@@ -35,7 +35,7 @@ export const fetchImages = async (
   page: number,
   perPage: number = 20
 ): Promise<UnsplashSearchResponse> => {
-  const accessKey = import.meta.env.VITE_API_KEY;
+  const accessKey = import.meta.env.VITE_UNSPLASH_API_KEY;
 
   const response = await fetch(
     `${UNSPLASH_API_BASE}/search/photos?query=${query}&page=${page}&per_page=${perPage}`,

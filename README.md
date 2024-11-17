@@ -1,50 +1,46 @@
-# React + TypeScript + Vite
+# Unsplash Image Viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based web application that uses the Unsplash API to fetch and display images in an interactive grid format.
 
-Currently, two official plugins are available:
+### [APP LINK](https://unsplash-images-viewr.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Search for Images**:  
+  Users can search for specific images using keywords. If no keyword is provided, the app automatically searches using a random word.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **View Images**:  
+  Browse high-quality images from Unsplash, displayed in an engaging grid layout.
 
-- Configure the top-level `parserOptions` property like this:
+- **Add/Remove Comments**:  
+  Users can add or remove comments on individual images for personalization or notes.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- **Favorites Management**:  
+  Mark images as favorites and manage them by adding or removing them from a dedicated favorites list.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Favorites List View**:  
+  View all favorited images in one place for easy access.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Run Locally
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Clone the repository:
+   ```bash
+   git clone
+   ```
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env` file in the root directory and add your Unsplash API access key:
+
+   ```
+   VITE_UNSPLASH_API_KEY=YOUR_UNPLASH_ACCESS_KEY
+   VITE_ENV=dev
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
