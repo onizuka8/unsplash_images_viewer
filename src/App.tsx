@@ -5,8 +5,8 @@ import { TypeAnimation } from "react-type-animation";
 import "./App.css";
 
 function App() {
-  const [showImageSearch, setShowImageSearch] = useState(true);
-  const [showTypeAnimation, setTypeAnimation] = useState(false);
+  const [showImageSearch, setShowImageSearch] = useState(false);
+  const [showTypeAnimation, setTypeAnimation] = useState(true);
 
   return (
     <>

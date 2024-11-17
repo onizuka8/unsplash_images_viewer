@@ -15,6 +15,9 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   iconSize = "1.2em",
 }) => {
+  if (totalPages < 1) {
+    return null;
+  }
   return (
     <div className={styles.pagination}>
       <PaginationButton
