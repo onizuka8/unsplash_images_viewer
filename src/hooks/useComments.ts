@@ -5,6 +5,8 @@ interface PhotoComment {
   comment: string; // User's comment
 }
 
+// This hook manages comments for photos in the gallery
+// Comments are stored in localStorage
 export const useComments = () => {
   const getComments = (): PhotoComment[] => {
     try {

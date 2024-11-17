@@ -5,7 +5,7 @@ import styles from "./FavoriteBanner.module.css";
 interface FavoriteBannerProps {
   selected: boolean;
   color?: string;
-  activeColor?: string;
+  favoritedColor?: string;
   size?: string | number;
   stroke?: string;
   strokeWidth?: string | number;
@@ -15,14 +15,14 @@ interface FavoriteBannerProps {
 
 const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
   color = "#b5b5b5",
-  activeColor = "#CEA600",
+  favoritedColor = "#CEA600",
   size = "2em",
   stroke = "white",
   strokeWidth = 0.7,
   selected,
   onToggle,
 }) => {
-  const [active, setSelected] = useState(selected);
+  const [isFavorited, setIsFavorited] = useState(selected);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => setIsHovered(true);
@@ -30,14 +30,14 @@ const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    const newSelected = !active;
+    const newSelected = !isFavorited;
 
     // Update the selected state if the onToggle function returns true
     // or if there is no onToggle function
     if (onToggle && onToggle(newSelected)) {
-      setSelected(newSelected);
+      setIsFavorited(newSelected);
     } else if (!onToggle) {
-      setSelected(newSelected);
+      setIsFavorited(newSelected);
     }
   };
 
@@ -45,7 +45,7 @@ const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
     <div>
       <BiSolidBookmarkStar
         className={styles.favoriteBanner}
-        color={active ? activeColor : color}
+        color={isFavorited ? favoritedColor : color}
         size={size}
         style={{ stroke, strokeWidth }}
         onClick={handleClick}
@@ -66,7 +66,7 @@ const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
             whiteSpace: "nowrap",
           }}
         >
-          Click to {active ? "remove" : "add"} as favorite
+          Click to {isFavorited ? "remove" : "add"} as favorite
         </span>
       )}
     </div>

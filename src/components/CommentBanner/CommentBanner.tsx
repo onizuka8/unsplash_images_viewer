@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BiCommentDetail } from "react-icons/bi"; // You can change this icon to something more suitable
+import { BiCommentDetail } from "react-icons/bi";
 import styles from "./CommentBanner.module.css";
 import { createPortal } from "react-dom";
 
@@ -11,7 +11,7 @@ interface CommentBannerProps {
   strokeWidth?: string | number;
   style?: React.CSSProperties;
   comment?: string;
-  onCommentSave?: (comment: string) => void; // Added comment parameter
+  onCommentSave?: (comment: string) => void;
 }
 
 const CommentBanner: React.FC<CommentBannerProps> = ({
@@ -22,23 +22,24 @@ const CommentBanner: React.FC<CommentBannerProps> = ({
   comment = "",
   onCommentSave,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showPopup, setShowPopup] = useState(false); // State for popup visibility
-  const [commentText, setCommentText] = useState(comment); // State for text input
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  // commentText is used to display and preserve the saved comment value
+  const [commentText, setCommentText] = useState(comment);
   const [textareaValue, setTextareaValue] = useState(comment);
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
+  // Show tooltip when hovering over the comment icon
+  const handleMouseEnter = () => setShowTooltip(true);
+  const handleMouseLeave = () => setShowTooltip(false);
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setShowPopup(true); // Show the popup when clicked
+    setShowPopup(true);
   };
 
   const handleConfirm = () => {
     if (onCommentSave) {
       onCommentSave(textareaValue);
-      // Update commentText as it has been saved
       setCommentText(textareaValue);
     }
     setShowPopup(false);
@@ -60,7 +61,7 @@ const CommentBanner: React.FC<CommentBannerProps> = ({
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       />
-      {isHovered && (
+      {showTooltip && (
         <span
           className={styles.tooltip}
           style={{

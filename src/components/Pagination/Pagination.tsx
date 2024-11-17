@@ -1,5 +1,5 @@
-import React from "react";
 import styles from "./Pagination.module.css";
+import PaginationButton from "./PaginationButton";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
 interface PaginationProps {
@@ -17,23 +17,19 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   return (
     <div className={styles.pagination}>
-      <button
+      <PaginationButton
         onClick={() => onPageChange("prev")}
         disabled={currentPage <= 1}
-        className={styles.paginationButton}
-      >
-        <BiLeftArrowAlt size={iconSize} />
-      </button>
+        icon={<BiLeftArrowAlt size={iconSize} />}
+      />
       <span className={styles.pageInfo}>
         {currentPage} / {totalPages}
       </span>
-      <button
+      <PaginationButton
         onClick={() => onPageChange("next")}
         disabled={currentPage >= totalPages}
-        className={styles.paginationButton}
-      >
-        <BiRightArrowAlt size={iconSize} />
-      </button>
+        icon={<BiRightArrowAlt size={iconSize} />}
+      />
     </div>
   );
 };

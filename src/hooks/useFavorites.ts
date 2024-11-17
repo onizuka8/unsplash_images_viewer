@@ -1,5 +1,7 @@
 import GalleryPhoto from "../types/GalleryPhoto";
 
+// This hook manages favorites in localStorage
+// Favorites are stored in localStorage
 export const useFavorites = () => {
   const getFavorites = (): GalleryPhoto[] => {
     try {
