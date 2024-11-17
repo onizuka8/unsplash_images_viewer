@@ -19,9 +19,7 @@ interface UnsplashImageUrls {
 interface UnsplashImage {
   id: string;
   urls: UnsplashImageUrls;
-  alt_description: string;
   user: { name: string };
-  description: string;
   width: number;
   height: number;
 }

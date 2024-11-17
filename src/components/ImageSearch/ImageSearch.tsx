@@ -7,6 +7,7 @@ import { generate } from "random-words";
 import { useFavorites } from "../../hooks/useFavorites";
 import { convertUnsplashImagesToGalleryPhotos } from "../../utils/ImageConverter";
 import GalleryPhoto from "../../types/GalleryPhoto";
+import { createPortal } from "react-dom";
 
 import {
   BiSolidBookmarkStar,
@@ -16,6 +17,8 @@ import {
   BiRightArrowAlt,
 } from "react-icons/bi";
 
+import PacmanLoader from "react-spinners/PacmanLoader";
+
 /**
  * ImageSearch component allows users to search for images using the Unsplash API.
  * It provides a search input, displays the search results as images, and includes pagination controls.
@@ -23,6 +26,7 @@ import {
 const ImageSearch: React.FC = () => {
   const itemsPerPage = 15; // Define the number of items per page for search
   const buttonIconSize = "1.2em"; // Define the size of the pagination button icons
+  const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [previousQuery, setPreviousQuery] = useState(String); // Store previous query
   const [images, setImages] = useState<GalleryPhoto[]>([]); // Images to display in the gallery
@@ -47,6 +51,7 @@ const ImageSearch: React.FC = () => {
   // Handle search form submission
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const searchQuery = query || (generate() as string);
 
     if (searchQuery !== previousQuery) {
@@ -63,10 +68,12 @@ const ImageSearch: React.FC = () => {
         console.error(error);
       }
     }
+    setLoading(false);
   };
 
   // Handle search pagination
   const handleSearchPagination = async (direction: "next" | "prev") => {
+    setLoading(true);
     const newPage = direction === "next" ? page + 1 : page - 1;
     try {
       const data = await fetchImages(query, newPage, itemsPerPage);
@@ -77,6 +84,7 @@ const ImageSearch: React.FC = () => {
     } catch (error) {
       console.error(error);
     }
+    setLoading(false);
   };
 
   // Handle favorites pagination
@@ -179,6 +187,25 @@ const ImageSearch: React.FC = () => {
           </>
         )}
       </div>
+      {loading &&
+        createPortal(
+          <div className={styles.spinnerContainer}>
+            <PacmanLoader
+              color={"rgba(250, 190, 0, 1)"}
+              loading={loading}
+              cssOverride={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+              size={50}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>,
+          document.body
+        )}
     </div>
   );
 };
