@@ -1,5 +1,7 @@
 # Unsplash Image Viewer
 
+> ### English
+
 A React-based web application that uses the Unsplash API to fetch and display images in an interactive grid format.
 
 ### [APP LINK](https://unsplash-images-viewr.vercel.app/)
@@ -41,6 +43,55 @@ A React-based web application that uses the Unsplash API to fetch and display im
    ```
 
 4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+> ### ITALIANO
+
+Un'applicazione web basata su React che utilizza l'API di Unsplash per recuperare e visualizzare immagini in un formato interattivo a griglia.
+
+### [LINK DELL'APP](https://unsplash-images-viewr.vercel.app/)
+
+## Caratteristiche
+
+- **Ricerca Immagini**:  
+  Gli utenti possono cercare immagini specifiche utilizzando parole chiave. Se non viene fornita una parola chiave, l'app effettua automaticamente una ricerca utilizzando una parola casuale.
+
+- **Visualizza Immagini**:  
+  Naviga tra immagini di alta qualità provenienti da Unsplash, visualizzate in una griglia coinvolgente.
+
+- **Aggiungi/Rimuovi Commenti**:  
+  Gli utenti possono aggiungere o rimuovere commenti sulle singole immagini per personalizzarle o aggiungere note.
+
+- **Gestione dei Preferiti**:  
+  Puoi segnare le immagini come preferite e gestirle aggiungendole o rimuovendole da una lista dedicata di preferiti.
+
+- **Vista della Lista dei Preferiti**:  
+  Visualizza tutte le immagini preferite in un unico posto per un accesso facile e veloce.
+
+## Esegui Localmente
+
+1. Clona la repository:
+   ```bash
+   git clone
+   ```
+2. Installa le dipendenze:
+
+   ```bash
+   npm install
+   ```
+
+3. Crea un file `.env` nella directory principale e aggiungi la tua access_key all'API di Unsplash:
+
+   ```
+   VITE_UNSPLASH_API_KEY=YOUR_UNPLASH_ACCESS_KEY
+   VITE_ENV=dev
+   ```
+
+4. Avvia il server di sviluppo:
    ```bash
    npm run dev
    ```
