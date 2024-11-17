@@ -15,8 +15,8 @@ interface FavoriteBannerProps {
 
 const FavoriteBanner: React.FC<FavoriteBannerProps> = ({
   color = "#b5b5b5",
-  favoritedColor = "#CEA600",
-  size = "2em",
+  favoritedColor = "rgba(255, 190, 0, .8)",
+  size = "2.2em",
   stroke = "white",
   strokeWidth = 0.7,
   selected,

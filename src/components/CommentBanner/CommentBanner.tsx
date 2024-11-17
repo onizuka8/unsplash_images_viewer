@@ -85,7 +85,7 @@ const CommentBanner: React.FC<CommentBannerProps> = ({
         createPortal(
           <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
             <div className={styles.popupContent}>
-              <h3>Add Comment</h3>
+              <h1>Add A Comment</h1>
               <textarea
                 value={textareaValue}
                 onChange={(e) => setTextareaValue(e.target.value)}

@@ -3,6 +3,12 @@
   padding: 10px 2rem;
   text-align: center;
   width: 100%;
+  background-color: #242424;
+}
+
+body {
+  background-color: #242424;
+  color: white;
 }
 
 .logo {

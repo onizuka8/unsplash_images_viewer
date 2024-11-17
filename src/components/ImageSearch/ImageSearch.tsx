@@ -23,8 +23,8 @@ const ImageSearch: React.FC = () => {
   const [images, setImages] = useState<GalleryPhoto[]>([]);
   const [searchImages, setSearchImages] = useState<GalleryPhoto[]>([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [favoritesPage, setFavoritesPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [favoritesPage, setFavoritesPage] = useState(0);
   const [favoritesTotalPages, setFavoritesTotalPages] = useState(1);
   const [favoritesView, setFavoritesView] = useState(false);
   const { getFavorites } = useFavorites();
